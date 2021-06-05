@@ -1,0 +1,14 @@
+<mat-toolbar class="colorNav d-flex justify-content-center">
+
+    <h1>Sistema Presupuesto Mercadeo</h1>
+
+    <div *ngIf="IsLogged" class="btn-group m-5">
+        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      Bienvenido(a) {{user.Nombre}}
+    </button>
+        <ul class="dropdown-menu">
+            <li><a (click)="onLogout()" class="dropdown-item">Salir</a></li>
+
+        </ul>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,42 @@
+<div class="card-header text-center">
+    Registro Presupuesto Influencers
+</div>
+<div class="card-body ">
+    <form class="row g-5 d-flex justify-content-center" [formGroup]="RegistroInf" (ngSubmit)="onSaveForm(RegistroInf.value)">
+      <div class="col-md-4">
+        <label class="form-label">Nombre Influencer</label>
+            <select  id="nombre" formControlName="Nombre" class="form-select">
+              
+              
+              <option  *ngFor="let influencer of ListInfluencer"  >{{influencer.Nombre}}</option>
+              
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="inputPassword4" class="form-label">Monto a pagar</label>
+          <input type="number" formControlName="MontoaPagar" class="form-control">
+        </div>
+        
+        <div class="col-md-4">
+          <label for="inputAddress" class="form-label">Ingrese la fecha del pago</label>
+          <input type="date" class="form-control" id="inputAddress" formControlName="Fecha">
+        </div>
+        
+        
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Elija el tipo de pago</label>
+          <select formControlName="TipoPago" class="form-select">
+            <option selected>Efectivo</option>
+            <option>Gift Card</option>
+          </select>
+        </div>
+        
+        <div class="col-md-4">
+          <label for="inputAddress" class="form-label">Observaciones</label>
+          <textarea type="text" class="form-control" id="inputAddress" formControlName="Observaciones"></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Registrar Pago</button>
+        </div>
+      </form>
+    </div>

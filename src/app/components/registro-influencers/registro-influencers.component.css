@@ -1,0 +1,30 @@
+table {
+    width: 100%;
+  }
+  
+ 
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  .ColorHeader{
+    background-color: #235daf;
+    font-size: large;
+  }
+  .ColorBody{
+    background-color: #ffffff;
+    font-size: large;
+    color: black;
+  }
+  .colorFilter{
+    background-color: #235daf;
+color:black
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .buttonColor{
+    background-color: #235daf;
+  }

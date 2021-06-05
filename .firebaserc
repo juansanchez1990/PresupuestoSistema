@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "reportesmercadeo-5e125": {
+      "hosting": {
+        "SistemaPresupuestoMercadeo": [
+          "reportesmercadeo-5e125"
+        ]
+      }
+    }
+  }
+}

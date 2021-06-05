@@ -1,0 +1,21 @@
+<form class="row g-3" [formGroup]="addInfluencer" (ngSubmit)="SaveInfluencer(addInfluencer.value)">
+ 
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Nombre</label>
+      <input formControlName="Nombre"type="text" class="form-control" id="inputAddress" >
+    </div>
+    <div class="col-12">
+      <label for="inputAddress2" class="form-label">Nombre Comercial</label>
+      <input formControlName="NombreComercial" type="text" class="form-control" id="inputAddress2" >
+    </div>
+    <div class="col-md-12">
+      <label for="inputCity" class="form-label">Observaciones</label>
+      <textarea formControlName="Observaciones" type="text" class="form-control" id="inputCity"></textarea>
+    </div>
+  
+    
+    
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>

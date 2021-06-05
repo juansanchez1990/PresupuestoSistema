@@ -1,0 +1,145 @@
+
+
+  <div class="card m-5">
+    <div class="card-header text-center">
+      <h1>Listado de Presupuestos</h1>
+    </div>
+    <div class="card-body">
+        <table class="table table-responsive-lg">
+            <thead class="table-dark">
+              <tr class="text-center">
+                <th>Id Presupuesto</th>
+                <th>Nombre Presupuesto</th>
+                <th>Limite</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Final</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+                <th>Trasladar</th>
+           
+              </tr>
+            </thead>
+            <tbody  *ngFor="let presupuesto of PresupuestosList">
+              <tr  class="text-center " *ngIf="presupuesto.header.Activo === 'Activo' ">
+              
+                <th scope="row">{{presupuesto.header.id}}</th>
+                <td>{{presupuesto.categoria.Nombre}}</td>
+                <td>{{presupuesto.header.Limite}}</td>
+                <td>{{presupuesto.header.Desde | date}}</td>
+                <td>{{presupuesto.header.Hasta | date}}</td>
+                <td><button type="button" class="btn btn-success" (click)="mandarPresupuesto(presupuesto)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                     <i class="fas fa-edit"></i>
+                  </button></td>
+                <td><button (click)="DeletePresupuesto(presupuesto.header.id)"  type="button" class="btn btn-danger">
+                     <i class="fas fa-trash"></i>
+                  </button></td>
+                  <td><button type="button" class="btn btn-info" (click)="mandarPresupuesto(presupuesto)" data-bs-toggle="modal" data-bs-target="#TrasladarPresupuesto">
+                    <i class="fas fa-exchange-alt"></i>
+                 </button></td>
+               
+                
+              </tr>
+            
+            </tbody>
+          </table>
+    </div>
+  </div>
+
+<!-- Editar Presupuesto -->
+  <div  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Editar Presupuesto</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="modal">
+          <h3>Nombre Presupuesto: <strong>{{PresupuestosEditar.categoria.Nombre}}</strong> </h3>
+          <h3>Monto Disponible: <strong>{{MontoActual}}</strong> </h3>
+
+          <form [formGroup]="RegistroEditar">
+            <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="inputEmail4" class="form-label">Monto</label>
+
+                  <input [ngModel]="LimiteMonto" formControlName="Limite" type="text" class="form-control"  aria-label="First name">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Desde</label>
+                  <input [ngModel]="FechaDesde| date:'yyyy-MM-dd'" formControlName="Desde" type="date" date='dd-MM-yyyy' class="form-control" placeholder="Last name" aria-label="Last name">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Hasta</label>
+                  <input [ngModel]="FechaHasta| date:'yyyy-MM-dd'" formControlName="Hasta" type="date" date='dd-MM-yyyy' class="form-control" placeholder="Last name" aria-label="Last name">
+                </div>
+
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" (click)="actualizarPresupuesto(PresupuestosEditar.header.id, RegistroEditar.value, PresupuestosEditar.categoria.id)" data-bs-dismiss="modal" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Trasladar Presupuesto -->
+  <div  class="modal fade" id="TrasladarPresupuesto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Trasladar monto de presupuesto</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="modal">
+
+         
+          <h3 class="alert alert-primary"><strong> Nombre Presupuesto: {{PresupuestosEditar.categoria.Nombre}}</strong></h3> 
+          
+
+          <h3>Monto Disponible: <strong>{{MontoActual}}</strong> </h3>
+          <form [formGroup]="TrasladoMonto"  >
+          <div class="row">
+            <div class="col">
+              <label for="inputState" class="form-label">Escriba el monto a trasladar</label>
+
+              <input type="text" #ValorMonto  class="form-control" formControlName="Monto" aria-label="First name">
+              <div *ngIf="TrasladoMonto.errors?.MontoMayor && (TrasladoMonto.touched || TrasladoMonto.dirty)" class="AlertDanger cross-validation-error-message alert alert-danger">
+              El monto supera el limite del presupuesto
+            </div>
+            </div>
+            <div class="col">
+              <label for="inputState" class="form-label">Elija el presupuesto</label>
+              
+              <select  (change)='CapturarPresupuesto($event.target.value)'   id="inputState" class="form-select">
+                
+                
+                <option selected>Escoja un presupuesto</option>
+                <option value="{{presupuesto.header.id}}" *ngFor="let presupuesto of PresupuestosList; let i=index">{{presupuesto.categoria.Nombre}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" [disabled]="!TrasladoMonto.valid" (click)="TrasladarMonto(ValorMonto.value)"  data-bs-dismiss="modal" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+          </form>
+        </div>
+        
+       
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+  
+
+
+  
+
+

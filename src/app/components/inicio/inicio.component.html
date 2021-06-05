@@ -1,0 +1,85 @@
+
+
+
+    <mat-drawer-container class="example-container" autosize>
+      <mat-drawer #drawer class="example-sidenav" mode="side">
+        <h2 style="color: rgb(30, 30, 253);">Listado de prespuestos</h2>
+        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <div class="container justify-content-center">
+          <div *ngFor="let Categoria of ListCategorias; let i=index"  class="row">
+
+            <div   class="col-sm">
+            <button type="button" routerLink="/RegistroInfluencers" class="btn btn-primary m-2">{{Categoria.Nombre}}</button>
+          </div>
+        
+      </div>
+         
+   
+ 
+   
+     
+      </div>
+        
+      </mat-drawer>
+      <div class="example-sidenav-content">
+        <div class="container">
+          <div class="row">
+        <div class="text-center">
+        <img src="../../../assets/images/LogoColonial.png" class="logo" alt="...">
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Asignar Presupuesto <i class="fas fa-money-bill-wave"></i>
+         </button>
+       
+         <button type="button" routerLink="/ListaPresupuestos"  class="btn btn-success m-2">Ver Presupuestos <i class="far fa-list-alt"></i></button>
+        <button type="button" class="btn btn-warning m-2" (click)="drawer.toggle()">
+          Registrar un pago <i class="fas fa-money-bill-wave-alt"></i>
+        </button>
+      </div>
+      </div>
+      </div>
+    
+    </mat-drawer-container>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Formulario para asignar presupuestos</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="RegistroPresupuesto" class="row g-3">
+                <div class="col-md-6">
+                  <label  class="form-label">Monto</label>
+                  <input formControlName="Monto" type="number" class="form-control" >
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword4" class="form-label">Fecha Inicio</label>
+                  <input formControlName="FechaInicio" type="date" class="form-control" id="inputPassword4">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword4" class="form-label">Fecha Final</label>
+                  <input formControlName="FechaFinal" type="date" class="form-control" id="inputPassword4">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputState" class="form-label">Asignar Presupuesto a:</label>
+                  <select  (change)='CapturarPresupuesto($event.target.value)'  id="inputState" class="form-select">
+                    
+                    <option selected>Escoja un presupuesto</option>
+
+                    <option value="{{Categoria.id}}" *ngFor="let Categoria of ListCategorias; let i=index">{{Categoria.Nombre}}</option>
+                  </select>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" [disabled]="!RegistroPresupuesto.valid" (click)="GuardarPresupuesto(RegistroPresupuesto.value)" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
